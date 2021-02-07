@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+<meta name="description" content="">
+<meta name="author" content="">
+
+<link rel="icon" href="build/e9c94a371a3abac3e01cf378154b54f0.favicon.png">
+
+<title></title>
+
+    <!-- Bootstrap core CSS -->
+<link href="build/2f624089c65f12185e79925bc5a7fc42.bootstrap.min.css" rel="stylesheet">
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+  <link href="build/page.078e496841cf81e7b365.css" rel="stylesheet">
+    <!--This is the actual function that calls the form widget-->
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.0.7/parsley.js"></script>
+    <script src="https://superphone.io/f/assets/javascripts/intlTelInput.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    
+    <!--This is the favicon for the browser tab-->
+    <link rel="shortcut icon" href="https://app.superphone.io/favicon.ico" type="image/x-icon">
+    
+    <!--These are the stylesheets for the page-->
+    <link href="https://fonts.googleapis.com/css?family=Oswald:300" rel="stylesheet">
+    <link rel="stylesheet" href="https://superphone.io/f/assets/stylesheets/intlTelInput.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+              <script type="text/javascript">
+
+        $(document).ready(function () {
+    
+            // Set up phone widget
+            $("#phone").intlTelInput({
+                utilsScript: 'https://superphone.io/f/assets/javascripts/utils.js',
+                numberType: "MOBILE",
+                nationalMode: false,
+                autoFormat: true,
+                autoPlaceholder: true
+            });
+    
+            // Click on button send
+            $('#addContact').submit(function (event) {
+                event.preventDefault();
+                var formData = $("#addContact").serializeArray();
+                $('#submitButton').prop('disabled', true);
+                $('.form-error').hide();
+    
+                // Convert the form data to backend format
+                var requestData = {};
+                formData.map(function (element) {
+                    requestData[element.name] = element.value;
+                });
+    
+                // Send post to API
+                $.ajax({
+                    url: 'https://superphone.io/w/GK7D2G', // Url where to submit the request
+                    type: "POST",
+                    beforeSend: function (request) {
+                        request.setRequestHeader("Access-Control-Allow-Origin", "*");
+                    },
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    data: JSON.stringify(requestData),
+                    success: function (result) {
+                        // You can see the result from the console
+                        // tab of the developer tools
+                        console.log(result);
+                        $('.custom-form').hide();
+                        $('.form-success').show();
+                    },
+                    error: function (xhr, resp, text) {
+                        $('.form-error').show();
+                        $('#submitButton').prop('disabled', false);
+                    }
+                });
+            });
+        });
+    </script>
+      <style>
+    body {
+    background: linear-gradient(to bottom, #000000 50%, #101010 100%);
+    color: white;
+        }
+
+    .page-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+        }
+        
+        *{
+  font-family: 'Oswald', sans-serif;
+        }    
+
+    button#submitButton {
+    text-transform: uppercase;
+    margin: 15px 0px;
+    width: 100%;
+    color: white;
+    padding: 8px 45px;
+    font-size: 19px;
+    border: 1px solid white;
+    border-radius: 0px;
+    background: #101010;
+        }
+
+    button#submitButton:hover {
+    color: black;
+    background: white;
+        }
+
+    span.country-name {
+    color: black;
+    padding: 5px;
+    font-size: 16px;
+        }
+      
+    input#phone {
+    letter-spacing: 1px;
+    color: white;
+    border: 0px;
+    border-bottom: 2px solid white;
+    background: black;
+    padding: 26px 46px;
+    font-size: 17px;
+    border-radius: 0px;
+    font-weight: 700;
+        }
+        
+    input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    height: 38px;
+        }
+    
+    .form-error {
+    padding-left: 12px;
+    display: none;
+    color: #D85959;
+        }
+    
+    .form-success {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 5px;
+    display: none;
+        }
+    
+    .parsley-required {
+    padding-top: 5px;
+    color: #D85959;
+        }
+    
+    .parsley-minlength {
+    padding-top: 5px;
+    color: #ffffff;
+        }
+    
+    .iti-flag {
+     background-image: url("https://superphone.io/f/assets/images/flags.png");
+        }
+
+    input#phone:focus {
+    box-shadow: 0px 0px 0px;
+        }
+        
+    .buto {
+    text-align: center;
+        }
+        
+    .form-success {
+    background: black;
+    color: white;
+    font-size: 19px;
+    width: 100%;
+    text-align: center;
+    margin-top: 61px;
+        }
+        
+    .form-error {
+    color: #ffffff;
+        }
+
+    </style>
+  </head>
+
+  <body class="main">
+
+    <div id="navbar-container" class="update-navbar-white update-navbar-show-button update-navbar-hide-take-me-to-superhuman" style="background: black;">
+      <nav class="navbar navbar-fixed-top">
+        <div class="container-fluid">
+          <div class="row take-me-to-superhuman-section">
+            <div class="take-me-to-superhuman-container">
+            </div>
+          </div>
+          <div class="row">
+            <div class="text-center col-lg-offset-4 col-lg-4 logo">
+              <h2>
+                <div>Q4 MEDIA</div>
+              </h2>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+<!--     <div class="container-fluid header">
+    <div class="page-center">
+    <div class="custom-form">
+        <div class="container">
+            <h1 class="text-center" style="font-weight: bold; margin-bottom: 45px; ">THINK YOU'RE A GOOD FIT WITH Q4 MEDIA?</h1>
+            <p class="text-center" style="font-size: 21px">PLEASE ENTER YOUR PHONE NUMBER<br>AND WE WILL TEXT YOU RIGHT BACK TO SCHEDULE  YOUR CALL</p>
+            <form id="addContact" class="form-horizontal" style="min-width: 100%" method="POST" action="#" autocomplete="false" data-parsley-validate>
+                <div class="form-group">
+                    <div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1 col-lg-4 col-lg-offset-4">
+                        <input autocomplete="off" tabindex="4" type="tel" class="form-control" id="phone" name="mobile"
+                                placeholder="Mobile # (w/country code)" data-parsley-trigger="focusout"
+                                data-parsley-minlength="9" data-parsley-required>
+                    </div>
+                    <div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1 col-lg-4 col-lg-offset-4">
+                        <button type="submit" id="submitButton" class="btn btn-default">Submit</button>
+                    </div>
+                </div>
+    
+                <div class="form-group" style="padding-left: 12px">
+                    <div class="form-error container">
+                        <div class="buto">Something went wrong. Please check your mobile and try again.</div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div> -->
+    <!--This is the text for the success page-->
+<!--     <div class="form-success">
+            <h1>Just texted you - please check your messages.</h1>
+    </div>
+    </div>
+    </div> -->
+
+    <div class="container-fluid introduction update-navbar-white update-navbar-show-button update-navbar-hide-take-me-to-superhuman m-5">
+      <div class="row" style="margin-bottom: 5rem">
+        <div class="background"></div>
+        <div class="col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-6 col-lg-offset-4 col-lg-4">
+          <div class="separator"></div>
+          <div class="wow fadeIn">
+          <h2 style="margin-bottom: 16px">
+            <div>ENHANCE YOUR ONLINE PRESENCE AND EXPONENTIALLY GROW YOUR CONSUMER BASE</div>
+          </h2>
+          <div class="narrative">
+            <p>
+Social media sites and blogs reach over 80% of American internet users, and that number is still rising. If your brand does not have a presence on these services the opportunity costs can be immense, as market share is being ceded to competitors almost literally without a fight.
+           </p>
+            <p>
+Q4 MEDIA is an Analytics Agency operating in four different countries. We offer specialized data analysis services designed to maximize reach and target the most suitable audiences for each of our clients.          </p>
+            <p>
+Whether your brand is just starting out and needs a boost, or has an established business presence, Q4 MEDIA’s tailored marketing solutions will expand your horizons.           </p>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid visually-gorgeous update-navbar-white update-navbar-show-button update-navbar-hide-take-me-to-superhuman">
+      <div class="row">
+        <div class="col-xs-12 col-lg-8">
+          <div class="row">
+            <div class="background"></div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-lg-3">
+          <div class="row">
+            <div class="bar"></div>
+            <div class="col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-6 col-lg-offset-0 col-lg-12">
+            <div class="wow fadeIn">
+              <div class="separator"></div>
+              <h2>
+                <div>Our ROI driven approach</div>
+              </h2>
+              <div class="narrative">
+                <p>
+Q4 MEDIA operates on a strategy designed to maximize our clients’ Return on Investment. This is in part because we pore over multiple strategies and employ advanced targeting algorithms to minimize Cost per Click and maximize lead generation.               </p>
+                <p>
+                  Return on Investment (ROI) in social media terms largely relies on the efficiency of the marketing campaign in question. This measure of efficiency is based on each of our client’s goals for each specific advertising campaign, and how well the campaign results stack up to these goals.
+                </p>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid blazingly-fast update-navbar-white update-navbar-show-button update-navbar-hide-take-me-to-superhuman hidden-xs">
+      <div class="row">
+        <div class="background-image visible-xs-block hidden-xs"></div>
+        <div class="gradient"></div>
+        <div class="col-xs-offset-1 col-xs-10 col-sm-5 col-md-4 col-lg-4">
+        <div class="wow fadeIn">
+          <div class="separator"></div>
+          <h2>
+            <div>Specialized Targeting Measures</div>
+          </h2>
+          <div class="narrative">
+            <p>
+You want to ensure your marketing strategy is as efficient as possible. There’s no point in investing in an advertisement when you do not know your customer. Therefore, Q4 MEDIA keeps track of your customers’ most common similarities and uses this data to target similar audiences.             </p>
+            <p>
+            There is a wide array of targeting features available with Q4 MEDIA with impressive attention to detail, allowing our clients to systematically refine their audience to each marketing campaign. 
+            </p>
+            <p>
+              This drives up the ROI for each campaign as Cost per Click is reduced even further, thus giving our clients more bang for their buck.
+            </p>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid undo-send update-navbar-white update-navbar-show-button update-navbar-hide-take-me-to-superhuman">
+      <div class="row">
+        <div class="background"></div>
+        <div class="col-xs-offset-1 col-xs-10 col-sm-offset-1 col-sm-5 col-md-offset-1 col-md-4 col-lg-offset-1 col-lg-4">
+        <div class="wow fadeIn">
+          <div class="separator"></div>
+          <h2>
+            <div>Split Testing</div>
+          </h2>
+          <div class="narrative">
+            <p>
+We use a variety of methods to determine the most effective campaign strategy, one of the most effective of these is Split-Testing. This method is used in more experimental or specialized situations, usually when an aspect of a client’s marketing strategy is suspected to be ineffective.            </p>
+            <p>
+              Split-Testing is also utilized when we want to measure results when there are a limited number of variances – by testing each variance. 
+            </p>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid cut-through-the-noise update-navbar-white update-navbar-show-button update-navbar-hide-take-me-to-superhuman">
+      <div class="row">
+        <div class="background hidden-xs" style="background: url(build/numbers.jpg);"></div>
+        <div class="col-xs-12 col-lg-push-6 col-lg-offset-1 col-lg-4">
+          <div class="row">
+            <div class="col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-6 col-lg-offset-2 col-lg-12">
+        <div class="wow fadeIn">
+          <div class="separator"></div> 
+          <h2>
+            <div>Advanced Analytics</div>
+          </h2>
+          <div class="narrative">
+            <p>
+Assumptions are annoying. With our advanced analytics we’ll be able to see exactly which advertising strategies are working and which aren’t. We use a myriad of metrics including engagements, impressions, reach and many more to tweak marketing strategies and ensure our clients remain successful. Analytics are now more important than ever and the value of a proper analytical framework for your social media marketing campaigns will only increase in importance.
+            <p>
+              At Q4 MEDIA, we regularly update our clients with every metric necessary to ensure there is minimal guesswork involved when it comes to your investments. 
+            </p>
+          </div>
+        </div>
+        </div>
+      </div>
+      </div>
+    </div>
+    </div>
+
+    <div class="container-fluid read-status update-navbar-white update-navbar-show-button update-navbar-hide-take-me-to-superhuman">
+      <div class="row">
+        <div class="col-xs-offset-1 col-xs-10 col-sm-5 col-lg-3 contents">
+          <div class="separator"></div>
+          <div class="wow fadeIn">
+          <h2>
+            <div>Remarketing</div>
+          </h2>
+          <h3>
+            <!-- <div>Advanced Pixel Tracking</div> -->
+          </h3>
+          <div class="narrative">
+            <p>
+One of the benefits of our Advanced Analytics is that it allows for Remarketing to target those who may be on the fence about your brand. Remarketing allows one to situate targeted ads to an audience that is defined by some form of previous engagement with your brand. We analyze page clicks, views and several other forms of engagement to retarget audience members who have shown an interest but have yet to commit themselves.           </p>
+            <p>
+              Remarketing campaigns often target customers who have shown an interest in purchasing a particular product by advertising the same product after a period of time, sometimes with a discount.
+            </p>
+          </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-lg-offset-1 col-lg-7">
+          <div class="row">
+            <div class="image-container">
+              <img src="build/33ee1266235bc0fda409347e9ec10459.read-status.jpg"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="container-fluid follow-up update-navbar-white update-navbar-show-button update-navbar-hide-take-me-to-superhuman">
+      <div class="row">
+        <div class="bar"></div>
+        <div class="col-xs-12 col-lg-push-7 col-lg-4">
+          <div class="row">
+            <div class="col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-6 col-lg-offset-0 col-lg-12">
+            <div class="wow fadeIn">
+              <div class="separator"></div>
+              <h2>
+                <div>Conversions and Scalability</div>
+              </h2>
+              <h3>
+                <div>Never Drop The Ball Again</div>
+              </h3>
+              <div class="narrative">
+                <p>
+At Q4 MEDIA our strategy is to maximize our clients’ ROI. One of the ways we achieve this is by developing a lead funnel and tweaking it to your brands’ strengths. Sometimes campaigns need to reach a specific number of viewers or achieve a certain number of page views, and in these situations campaign results are often in the extremes. This is why Q4 MEDIA uses each of the above strategies to refine each campaign and figure out what works best, before scaling your marketing campaign.              </p>
+                <p>
+                  Once the successful formula has been identified, it will be used to amplify your content reach and skyrocket lead generation, reaching the right people at the right time with the right message. 
+                </p>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-lg-pull-4 col-lg-6">
+          <div class="image-container wow fadeInUp">
+            <img src="build/twophones.png" alt="Superhuman Reminders for iPhone"/>
+            <div class="baseline-strut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid two-up update-navbar-white update-navbar-show-button update-navbar-hide-take-me-to-superhuman">
+      <div class="row">
+        <div class="col-sm-12 col-md-6 scheduled-emails">
+          <div class="row">
+            <div class="overlay">
+              <div class="col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-6 col-md-offset-2 col-md-8">
+              <div class="wow fadeIn">
+                <div class="separator"></div>
+                <h2>
+                  <div>OUR TRIPLE A PROCESS <nobr></nobr></div>
+                </h2>
+                <h3>
+                  <div>We leave no room for guess work</div>
+                </h3>
+                <div class="narrative">
+                  <p>
+                    Analysis: We filter and analyze millions of potential clients to focus our marketing efforts on those who have intent to purchase. 
+
+                  </p> 
+                  <p>Acquire: We capture those with intent through our in-house analytics and initiate retargeting to invoke customer action. We understand what was successful last year might not work today and the value behind adapting your message to remain impactful. 
+                  </p>
+                  <p>
+                   Automate: Lastly, we build a self-replicating system and continue optimizing the process that continually collects leads on autopilot. 
+                  </p>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-6 snooze">
+          <div class="row">
+            <div class="overlay">
+              <div class="col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-6 col-md-offset-2 col-md-8">
+              <div class="wow fadeIn">
+                <div class="separator"></div>
+                <h2>
+                  <div>CORE PHILOSOPHY</div>
+                </h2>
+                <h3>
+                  <div>Digital Product & Innovation Studio</div>
+                </h3>
+                <div class="narrative">
+                  <p>
+                    Our philosophy is simple: we are committed to creating innovative solutions with any business, brand or individual looking to make an impact, all with a staunch devotion to quality and efficiency. 
+                  </p>
+                  <p>
+                    With each new project we bring everything we have learned to the table while gaining new insights that may improve our system even further in the future. We treat our process like a product: we are constantly innovating on it using the same framework and methods we use to build digital products and businesses. We have been refining our process since 2016.
+                  </p>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+        <div class="container-fluid header">
+    <div class="page-center">
+    <div class="custom-form">
+        <div class="container">
+            <h1 class="text-center" style="font-weight: bold; margin-bottom: 45px; ">THINK YOU'RE A GOOD FIT WITH Q4 MEDIA?</h1>
+            <p class="text-center" style="font-size: 21px">PLEASE ENTER YOUR PHONE NUMBER<br>AND WE WILL TEXT YOU RIGHT BACK TO SCHEDULE  YOUR CALL</p>
+            <form id="addContact" class="form-horizontal" style="min-width: 100%" method="POST" action="#" autocomplete="false" data-parsley-validate>
+                <div class="form-group">
+                    <div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1 col-lg-4 col-lg-offset-4">
+                        <input autocomplete="off" tabindex="4" type="tel" class="form-control" id="phone" name="mobile"
+                                placeholder="Mobile # (w/country code)" data-parsley-trigger="focusout"
+                                data-parsley-minlength="9" data-parsley-required>
+                    </div>
+                    <div class="col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1 col-lg-4 col-lg-offset-4">
+                        <button type="submit" id="submitButton" class="btn btn-default">Submit</button>
+                    </div>
+                </div>
+    
+                <div class="form-group" style="padding-left: 12px">
+                    <div class="form-error container">
+                        <div class="buto">Something went wrong. Please check your mobile and try again.</div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--This is the text for the success page-->
+    <div class="form-success">
+            <h1>Just texted you - please check your messages.</h1>
+    </div>
+    </div>
+    </div>
+    <div class="container-fluid footer update-navbar-hide-on-desktop">
+  <div class="row">
+    <div class="col text-center">
+      <h2>
+        <div><a href="index.html">Q4 MEDIA</a></div>
+      </h2>
+      <div class="footer-content row">
+        <div class="footer-links-text col">
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html" style="margin-right: 0px;">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--    <script type="text/javascript" src="build/078e496841cf81e7b365.page.js"></script>
+ --></body>
+</html>
